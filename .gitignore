@@ -1,0 +1,6 @@
+/api/config*
+/api/database*
+/config
+database*
+.DS_Store
+node_modules
