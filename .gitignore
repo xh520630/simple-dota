@@ -4,3 +4,8 @@
 database*
 .DS_Store
 node_modules
+/runtime
+dist
+/.idea
+dota2.sql
+*code-workspace

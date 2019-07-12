@@ -1,8 +1,39 @@
 <template>
   <div class="heroes-list">
-    <el-row :gutter="10" type="flex" justify='left' style="flex-wrap: wrap; padding: 0 5px">
-      <el-col v-for="(i,k) in test" :key=k :span="1" style='padding-top:10px'>
-        <div class="grid-content bg-purple"></div>
+    <el-row :gutter="5" type="flex" justify='left' style="flex-wrap: wrap; padding: 0 5px">
+      <el-col v-for="(index, key) in strength" :key=key :span="1" style='padding-top:10px'>
+        <router-link :to="{ path : '/hero', query : { hero_id : index.id }}">
+          <div class="grid-content bg-purple">
+              <el-image
+              style="width: 100%; height: 100%"
+              :src="index.avatar"
+              fit="fit"></el-image>
+          </div>
+        </router-link>
+      </el-col>
+    </el-row>
+    <el-row :gutter="5" type="flex" justify='left' style="flex-wrap: wrap; padding: 0 5px">
+      <el-col v-for="(index, key) in intelligent" :key=key :span="1" style='padding-top:10px'>
+        <router-link :to="{ path : '/hero', query : { hero_id : index.id }}">        
+          <div class="grid-content bg-purple">
+            <el-image
+            style="width: 100%; height: 100%"
+            :src="index.avatar"
+            fit="fit"></el-image>
+          </div>
+        </router-link>
+      </el-col>
+    </el-row>
+    <el-row :gutter="5" type="flex" justify='left' style="flex-wrap: wrap; padding: 0 5px">
+      <el-col v-for="(index, key) in agile" :key=key :span="1" style='padding-top:10px'>
+        <router-link :to="{ path : '/hero', query : { hero_id : index.id }}">
+          <div class="grid-content bg-purple">
+            <el-image
+            style="width: 100%; height: 100%"
+            :src="index.avatar"
+            fit="fit"></el-image>
+          </div>
+        </router-link>
       </el-col>
     </el-row>
   </div>
@@ -13,11 +44,25 @@ export default {
   name: 'HeroesList',
   data () {
     return {
-      test: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 
-        11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
-        23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34,
-        35, 36, 37, 38, 39, 40]
+      strength:[]
+      ,intelligent:[]
+      ,agile:[]
+      ,
     }
+  }, methods: {
+    test1(val){
+      console.log(val);
+    },
+    heroes_info(){
+      this.$axios.get(this.GLOBAL.api_url + '/heroes_info').then((res)=>{
+        console.log(res.data.data);
+        this.strength    = res.data.data.data[0];
+        this.intelligent = res.data.data.data[1];
+        this.agile       = res.data.data.data[2];
+      })
+    }
+  }, created: function() {
+        this.heroes_info();
   }
 }
 </script>
@@ -34,15 +79,14 @@ export default {
   .bg-purple-dark {
     background: #99a9bf;
   }
-  .bg-purple {
+  /* .bg-purple {
     background: #d3dce6;
-  }
+  } */
   .bg-purple-light {
     background: #e5e9f2;
   }
   .grid-content {
     border-radius: 4px;
-    min-height: 36px;
   }
   .row-bg {
     padding: 10px 0;

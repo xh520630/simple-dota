@@ -1,5 +1,5 @@
 import Main from '@/components/Main'
-import Heroes from '@/components/Heroes'
+import HeroInfo from '@/components/HeroInfo'
 import Banner from '@/components/Banner'
 
 
@@ -14,7 +14,7 @@ export default [
     }, {
         path: '/hero',
         name: 'Hero',
-        component: Heroes
+        component: HeroInfo
     }, {
         path: '/banner',
         name: 'Banner',

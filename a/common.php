@@ -1,8 +1,4 @@
 <?php
-require __DIR__  . '/helper.php';
-require APP_PATH . 'function.logic.php';
-
-
 
 function finish($code = 200, $message = '', $data = [], $other = [])
 {
