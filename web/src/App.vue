@@ -1,13 +1,20 @@
 <template>
     <div id="app">
-      <el-header>Header</el-header>
+      <Search></Search>
       <router-view/>
-      <el-footer>Footer</el-footer>
+      <Footer></Footer>
     </div>
 </template>
 
 <script>
+import Search from './components/Search';
+import Footer from './components/Footer';
+
 export default {
-  name: 'App'
+  name: 'App',
+  components:{
+    'Search' : Search,
+    'Footer' : Footer
+  }
 }
 </script>

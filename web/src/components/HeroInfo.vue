@@ -1,15 +1,26 @@
 <template>
-    <div class='hero_info'>
-      <el-row type="flex" justify='center'>
-        <el-col :span="4" v-for="(o, index) in 2" :key="o" :offset="index > 0 ? 2 : 0">
+    <!-- <div class='hero_info' style="margin:0 auto; width: 1440px;"> -->
+    <div class='hero_info' style="margin:0 auto; width: 1080px;">
+      <el-row :gutter="40" justify="left" style="flex-wrap: wrap">
+        <el-col :span="6" v-for="(item, index) in ornament"  :key="index" style='margin-top:40px'>
           <el-card :body-style="{ padding: '0px' }">
-            <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-            <div style="padding: 14px;">
-              <span>好吃的汉堡</span>
-              <div class="bottom clearfix">
-                <el-button type="text" class="button">操作按钮</el-button>
+            <router-link :to="{ path : '/ornament' , query : { 'ornament_id' : item.id }}">
+              <div style="overflow:hidden;"><img :src="item.avatar" class="image"></div>
+              <div style="padding: 14px;">
+                <span style="color: black">{{ item.name }}</span>
+                <div class="bottom clearfix" style='height: 30px; line-height: 30px'>
+                  <el-button type="text" class="button">稀有度</el-button>
+                  <el-rate
+                    style='display: inline-block;line-height:10px'
+                    v-model="item.value"
+                    disabled
+                    show-score
+                    text-color="#ff9900"
+                    score-template="">
+                  </el-rate>
+                </div>
               </div>
-            </div>
+            </router-link>
           </el-card>
         </el-col>
       </el-row>
@@ -17,21 +28,27 @@
 </template>
 
 <script>
+import {mapState,mapGetters,mapActions} from 'vuex';
 export default {
   data () {
     return {
       msg: 'Welcome to the DOTA WORLD'
+      ,ornament:[]
+      ,
     }
   }
   ,methods:{
     getInfo(){
       this.$axios.get(this.GLOBAL.api_url + '/hero_detail?hero_id=' 
         + this.$route.query.hero_id).then((res)=>{
-          console.log(res.data.data);    
+          console.log(res.data.data);  
+          this.ornament = res.data.data;  
         })
     }
   },created(){
     this.getInfo();
+  }, computed:{
+
   }
 }
 </script>
@@ -39,24 +56,14 @@ export default {
   .hero_info{
     margin: 15px auto;
   }
-  .time {
-    font-size: 13px;
-    color: #999;
-  }
-  
-  .bottom {
-    margin-top: 13px;
-    line-height: 12px;
-  }
-
   .button {
     padding: 0;
-    float: right;
   }
-
   .image {
-    width: 100%;
+    max-width: 100%;
     display: block;
+    cursor: pointer;
+    transition: all 0.6s;
   }
 
   .clearfix:before,
@@ -67,5 +74,8 @@ export default {
   
   .clearfix:after {
       clear: both
+  }
+  .image:hover{
+    transform: scale(1.2)
   }
 </style>

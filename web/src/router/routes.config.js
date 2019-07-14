@@ -1,6 +1,6 @@
 import Main from '@/components/Main'
 import HeroInfo from '@/components/HeroInfo'
-import Banner from '@/components/Banner'
+import Ornament from '@/components/Ornament'
 
 
 export default [
@@ -16,8 +16,8 @@ export default [
         name: 'Hero',
         component: HeroInfo
     }, {
-        path: '/banner',
-        name: 'Banner',
-        component: Banner
+        path: '/ornament',
+        name: 'Ornament',
+        component: Ornament
     },
 ]

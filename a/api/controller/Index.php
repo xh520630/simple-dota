@@ -28,13 +28,23 @@ class Index extends Controller
         finish(200, '获取成功', ['total' => $total, 'data' => $data_list]);
     }
 
-    // 获取详情
+    // 获取英雄详情
     public function hero_detail()
     {
         if (!$id = intval(input('hero_id', 0))) finish(201, '操作有误');
         $condition = [];
         $condition['hero_id'] = $id;
         $data = \think\Db::name('hero_ornament')->where($condition)->select();
+        finish(200, '获取成功', $data);
+    }
+
+    // 获取物品详情
+    public function ornament_detail()
+    {
+        if (!$o_id = intval(input('ornament_id', 0))) finish(201, '操作有误');
+        $condition = [];
+        $condition['o_id'] = $o_id;
+        $data = \think\Db::name('ornament_images')->where($condition)->select();
         finish(200, '获取成功', $data);
     }
 }

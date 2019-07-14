@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <el-container>
-      <el-main style="min-width:1440px;margin:0 auto;">
+      <el-main style="margin:0 auto;">
           <heroesList></heroesList>
       </el-main>
     </el-container>
