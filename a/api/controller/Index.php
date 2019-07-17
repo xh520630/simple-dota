@@ -33,7 +33,8 @@ class Index extends Controller
     {
         if (!$id = intval(input('hero_id', 0))) finish(201, '操作有误');
         $condition = [];
-        $condition['hero_id'] = $id;
+//        $condition['hero_id'] = $id;
+        $condition['hero_id'] = 2;
         $data = \think\Db::name('hero_ornament')->where($condition)->select();
         finish(200, '获取成功', $data);
     }
@@ -43,7 +44,8 @@ class Index extends Controller
     {
         if (!$o_id = intval(input('ornament_id', 0))) finish(201, '操作有误');
         $condition = [];
-        $condition['o_id'] = $o_id;
+        $condition['o_id'] = 2;
+//        $condition['o_id'] = $o_id;
         $data = \think\Db::name('ornament_images')->where($condition)->select();
         finish(200, '获取成功', $data);
     }

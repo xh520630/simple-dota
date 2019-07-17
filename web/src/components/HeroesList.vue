@@ -1,12 +1,13 @@
 <template>
 <!-- 这个有空再封装一哈 -->
   <div class="heroes-list" style='margin: 0 auto;'>
-    <el-row :gutter="5" type="flex" justify='left' style="flex-wrap: wrap; padding: 0 5px">
+    <el-row :gutter="5" type="flex" justify='left' style="flex-wrap: wrap; padding: 0 5px; margin: 0 auto;">
       <el-col v-for="(index, key) in strength" :key=key :span="1" style='padding-top:10px'>
         <router-link :to="{ path : '/hero', query : { hero_id : index.id }}">
           <div class="grid-content bg-purple" :class="{ unselected: index.unselected }">
           <!-- <div class="grid-content bg-purple" :class='index.selected'> -->
               <el-image
+              :title="index.cname"
               style="width: 100%; height: 100%"
               :src="index.avatar"
               fit="fit"></el-image>
@@ -14,11 +15,13 @@
         </router-link>
       </el-col>
     </el-row>
-    <el-row :gutter="5" type="flex" justify='left' style="flex-wrap: wrap; padding: 0 5px">
+    <el-row :gutter="5" type="flex" justify='left' style="flex-wrap: wrap; padding: 0 5px; margin: 0 auto;">
       <el-col v-for="(index, key) in intelligent" :key=key :span="1" style='padding-top:10px'>
         <router-link :to="{ path : '/hero', query : { hero_id : index.id }}">        
           <div class="grid-content bg-purple" :class="{ unselected: index.unselected }">
             <el-image
+            :class="{ default_img : index.avatar == 'https://cs704.cn/wp-content/uploads/2019/07/2333.gif' ? true : false}"
+            :title="index.cname"
             style="width: 100%; height: 100%"
             :src="index.avatar"
             fit="fit"></el-image>
@@ -26,11 +29,12 @@
         </router-link>
       </el-col>
     </el-row>
-    <el-row :gutter="5" type="flex" justify='left' style="flex-wrap: wrap; padding: 0 5px">
+    <el-row :gutter="5" type="flex" justify='left' style="flex-wrap: wrap; padding: 0 5px; margin: 0 auto;">
       <el-col v-for="(index, key) in agile" :key=key :span="1" style='padding-top:10px'>
         <router-link :to="{ path : '/hero', query : { hero_id : index.id }}">
           <div class="grid-content bg-purple" :class="{ unselected: index.unselected }">
             <el-image
+            :title="index.cname"
             style="width: 100%; height: 100%"
             :src="index.avatar"
             fit="fit"></el-image>
@@ -60,7 +64,7 @@ export default {
     },
     heroes_info(){
       this.$axios.get(this.GLOBAL.api_url + '/heroes_info').then((res)=>{
-        console.log(res.data.data);
+        // console.log(res.data.data);
         this.strength    = res.data.data.data[0];
         this.intelligent = res.data.data.data[1];
         this.agile       = res.data.data.data[2];
@@ -121,5 +125,8 @@ export default {
   }
   .unselected{
     opacity: 0.3;
+  }
+  .default_img{
+    margin-top:25%;
   }
 </style>

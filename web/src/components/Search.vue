@@ -8,12 +8,15 @@
       </el-col>      
       <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
       <el-col :span="6">
-        <el-input
-          style='max-width:200px; float:right'
-          placeholder="请输入英雄名称"
+        <el-autocomplete
+          style='max-width:250px; float:right'
+          placeholder='试着输入"JB"'
+          :fetch-suggestions="querySearch"
+          :trigger-on-focus="false"
           suffix-icon="el-icon-search"
+          @select="selectHero"
           v-model="heroName">
-        </el-input>
+        </el-autocomplete>
       </el-col>
     </el-row>
   </el-header>
@@ -43,7 +46,29 @@ export default {
       //     if (list.indexOf(current))
       //       console.log(list.indexOf(current));
       // });
-    }
+    },
+    selectHero(item){
+      this.$router.push({ path: '/hero', query: { hero_id: item.id }});
+      // this.$router.push({ name : 'hero', params:{ hero_id : item.id }});
+      // 太粗暴了直接替换路由
+      // this.$router.replace({path:'/hero/',query:{hero_id:item.id}});
+    }, 
+    querySearch(queryString, cb) {
+      var restaurants = this.strength.concat(this.intelligent, this.agile);
+      
+      // 批量替换key名
+      var restaurants = restaurants.map(o=>{return{id:o.id, value:o.name, cname:o.cname}});
+      var results = queryString ? restaurants.filter(this.createFilter(queryString, restaurants)) : restaurants;
+      // 调用 callback 返回建议列表的数据
+
+      cb(results);
+    }, // 输入后搜索
+    createFilter(queryString, restaurants) {
+      return (restaurants) => {
+        return (restaurants.value.indexOf(queryString.toUpperCase()) != -1 ||
+          restaurants.cname.indexOf(queryString.toUpperCase()) != -1 );
+      };
+    }, // 创建搜索菜单
   }
   ,computed:{
     ...mapGetters('heroStatus',{
