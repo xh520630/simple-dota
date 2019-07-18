@@ -5,6 +5,11 @@ use think\Controller;
 
 class Index extends Controller
 {
+    public function _initialize()
+    {
+        parent::_initialize(); //
+    }
+
     public function index()
     {
         echo 'test_ok';
@@ -18,8 +23,27 @@ class Index extends Controller
     // 获取英雄资料
     public function heroes_info()
     {
-        $condition = [];
+        // 记录登陆的IP及次数
+        $ip = $_SERVER["REMOTE_ADDR"];
+        $data = \think\Db::name('guest_log')->where('ip', $ip)
+            ->whereTime('create_time', 'today')->find();
+        if ($data) {
+            $data['times'] = ++ $data['times'];
+            $data['last_time'] = date('Y-m-d H:i:s', time());
+            \think\Db::name('guest_log')
+                ->where('id', $data['id'])
+                ->update($data);
+        } else {
+            $data = [];
+            $data['ip'] = $ip;
+            $data['times'] = 1;
+            $data['create_time'] = date('Y-m-d H:i:s', time());
+            $data['last_time'] = date('Y-m-d H:i:s', time());
+            \think\Db::name('guest_log')->insert($data);
+        }
 
+
+        $condition = [];
         $data = \think\Db::name('heroes')->where($condition)->select();
         $total = \think\Db::name('heroes')->where($condition)->count();
         $data_list = [];

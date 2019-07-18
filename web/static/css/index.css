@@ -4,7 +4,7 @@
     text-decoration:none;
 }
 /* header&footer */
-  .el-header, .el-footer {
+  .el-header{
     color: #333;
     line-height: 60px;
   }
@@ -35,3 +35,7 @@
     line-height: 320px;
   }
 /* header&footer */
+.img_from{
+  font-size: 12px;
+  color:#333;
+}

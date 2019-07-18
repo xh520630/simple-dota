@@ -34,21 +34,28 @@ export default {
     return {
       msg: 'Welcome to the DOTA WORLD'
       ,ornament:[]
+      ,hero_id: this.$route.query.hero_id ? this.$route.query.hero_id : this.$route.params.hero_id
       ,
     }
   }
   ,methods:{
     getInfo(){
       this.$axios.get(this.GLOBAL.api_url + '/hero_detail?hero_id=' 
-        + this.$route.query.hero_id).then((res)=>{
+        + this.hero_id).then((res)=>{
           console.log(res.data.data);  
           this.ornament = res.data.data;  
         })
     }
   },created(){
     this.getInfo();
-  }, computed:{
-
+    if(this.$route.query) 
+      this.hero_id = this.$route.query.id;
+    console.log(this.$router.currentRoute.path);
+  },watch: {
+    $route(to,from){
+      this.hero_id = to.query.hero_id;
+      return this.getInfo();
+    }
   }
 }
 </script>

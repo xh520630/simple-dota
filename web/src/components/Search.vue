@@ -2,8 +2,11 @@
   <el-header>
     <el-row type="flex" justify="center">
       <el-col :span="6">
-        <el-button plain  @click="$router.back(-1)">
+        <el-button plain  @click="$router.back(-1)" v-if="!isMain">
           <i class="el-icon-arrow-left"></i>
+        </el-button>
+        <el-button plain  @click="$router.replace()" v-if="isMain">
+          <i class="el-icon-s-home"></i>
         </el-button>
       </el-col>      
       <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
@@ -28,7 +31,8 @@ export default {
   data () {
     return {
       heroName: '',
-      list:[1234,45,456,342]
+      list:[1234,45,456,342],
+      isMain: false,
     }
   }
   ,methods:{
@@ -48,8 +52,10 @@ export default {
       // });
     },
     selectHero(item){
+      // 这个最好
       this.$router.push({ path: '/hero', query: { hero_id: item.id }});
-      // this.$router.push({ name : 'hero', params:{ hero_id : item.id }});
+      // 下面这个name需要与router.config内的name对应...
+      // this.$router.push({ name : 'Hero', params:{ hero_id : item.id }});
       // 太粗暴了直接替换路由
       // this.$router.replace({path:'/hero/',query:{hero_id:item.id}});
     }, 
@@ -69,6 +75,11 @@ export default {
           restaurants.cname.indexOf(queryString.toUpperCase()) != -1 );
       };
     }, // 创建搜索菜单
+    changeIcon(){
+      if (this.$route.path == '/')
+        this.isMain = true;
+      else this.isMain = false;
+    },
   }
   ,computed:{
     ...mapGetters('heroStatus',{
@@ -78,6 +89,7 @@ export default {
     }),
   }
   ,created(){
+
   }
   ,watch:{
     heroName(curVal,oldVal){
@@ -86,6 +98,7 @@ export default {
       this.searchHero(this.intelligent, curVal);
       this.searchHero(this.agile, curVal);
     },
+    '$route': 'changeIcon',
   }
 }
 </script>
