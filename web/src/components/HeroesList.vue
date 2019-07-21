@@ -16,7 +16,7 @@
       </el-col>
     </el-row>
     <el-row :gutter="5" type="flex" justify='left' style="flex-wrap: wrap; padding: 0 5px; margin: 0 auto;">
-      <el-col v-for="(index, key) in intelligent" :key=key :span="1" style='padding-top:10px'>
+      <el-col v-for="(index, key) in agile" :key=key :span="1" style='padding-top:10px'>
         <router-link :to="{ path : '/hero', query : { hero_id : index.id }}">        
           <div class="grid-content bg-purple" :class="{ unselected: index.unselected }">
             <el-image
@@ -30,7 +30,7 @@
       </el-col>
     </el-row>
     <el-row :gutter="5" type="flex" justify='left' style="flex-wrap: wrap; padding: 0 5px; margin: 0 auto;">
-      <el-col v-for="(index, key) in agile" :key=key :span="1" style='padding-top:10px'>
+      <el-col v-for="(index, key) in intelligent" :key=key :span="1" style='padding-top:10px'>
         <router-link :to="{ path : '/hero', query : { hero_id : index.id }}">
           <div class="grid-content bg-purple" :class="{ unselected: index.unselected }">
             <el-image
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import {mapState,mapGetters,mapActions} from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
 export default {
   name: 'HeroesList',
   data () {
@@ -65,9 +65,9 @@ export default {
     heroes_info(){
       this.$axios.get(this.GLOBAL.api_url + '/heroes_info').then((res)=>{
         // console.log(res.data.data);
+        this.agile       = res.data.data.data[1];
         this.strength    = res.data.data.data[0];
-        this.intelligent = res.data.data.data[1];
-        this.agile       = res.data.data.data[2];
+        this.intelligent = res.data.data.data[2];
         this.$store.dispatch('heroStatus/updateAgile',       this.agile);
         this.$store.dispatch('heroStatus/updateStrength',    this.strength);
         this.$store.dispatch('heroStatus/updateIntelligent', this.intelligent);
@@ -102,9 +102,9 @@ export default {
   /* .bg-purple {
     background: #d3dce6;
   } */
-  .bg-purple-light {
+  /* .bg-purple-light {
     background: #e5e9f2;
-  }
+  } */
   .grid-content {
     border-radius: 4px;
   }

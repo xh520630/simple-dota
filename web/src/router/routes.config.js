@@ -2,6 +2,7 @@ import Main from '@/components/Main'
 import HeroInfo from '@/components/HeroInfo'
 import Ornament from '@/components/Ornament'
 import AddOrnament from '@/components/AddOrnament'
+import MessageBoard from '@/components/MessageBoard'
 
 
 export default [
@@ -28,5 +29,10 @@ export default [
         name: 'AaddOrnament',
         component: AddOrnament,
         meta: { title : '添加饰品' }
+    }, {
+        path: '/message_board',
+        name: 'MessageBoard',
+        component: MessageBoard,
+        meta: { title : '留言板' }
     },
 ]

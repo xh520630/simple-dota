@@ -1,7 +1,7 @@
 const state = {
-    strength:[],
-    intelligent:[],
-    agile:[]
+    strength:[], // 力量型
+    intelligent:[], // 智力型
+    agile:[], // 敏捷型
 };
 const getters={
     getStrength(state){ //承载变化的collects

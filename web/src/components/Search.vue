@@ -8,6 +8,11 @@
         <el-button plain  @click="$router.replace()" v-if="isMain">
           <i class="el-icon-s-home"></i>
         </el-button>
+        <router-link :to="{ path: 'message_board'}" v-if='showMessageBoard'>
+          <el-button plain>
+          留言板
+          </el-button>
+        </router-link>
       </el-col>      
       <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
       <el-col :span="6">
@@ -26,13 +31,14 @@
 </template>
 
 <script>
-import {mapState,mapGetters,mapActions} from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
 export default {
   data () {
     return {
       heroName: '',
       list:[1234,45,456,342],
       isMain: false,
+      showMessageBoard: true,
     }
   }
   ,methods:{
@@ -78,14 +84,17 @@ export default {
     changeIcon(){
       if (this.$route.path == '/')
         this.isMain = true;
-      else this.isMain = false;
+        else this.isMain = false;
+      if (this.$route.path == '/message_board')
+        this.showMessageBoard = false;
+        else this.showMessageBoard = true;
     },
   }
   ,computed:{
     ...mapGetters('heroStatus',{
-      strength:'getStrength',
-      intelligent:'getIntelligent',
-      agile:'getAgile',
+      strength: 'getStrength',
+      intelligent: 'getIntelligent',
+      agile: 'getAgile',
     }),
   }
   ,created(){

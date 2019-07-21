@@ -20,6 +20,42 @@ class Index extends Controller
         echo 'ojbk';
     }
 
+    // 添加/获取留言
+    public function message()
+    {
+        if (request()->isPost())
+        {
+            $cont = trim(input('content', ''));
+            $user = trim(input('user', ''));
+            if (!$cont || !$user) finish(201, '请求有误');
+            $data = [];
+            $data['content'] = $cont;
+            $data['create_user'] = $user;
+            $data['create_time'] = date('Y-m-d H:i:s');
+            false === \think\Db::name('message')->insert($data) ?
+                finish(201, '添加失败') : finish(200, '添加成功');
+        }
+        $condition = [];
+        $message_list = \think\Db::name('message')->where($condition)->page(page())->order('id desc')->select();
+        $message_count = \think\Db::name('message')->where($condition)->count();
+        finish(200, '获取成功', ['total' => $message_count, 'list' => $message_list]);
+    }
+
+    // 上传文件
+    public function upload()
+    {
+        echo 2333;exit;
+        $file = request()->file('file');
+        $path = ROOT_PATH . DS . 'uploads';
+        if(($info = $file->validate(['size'=>10*1024*1024,'ext'=>'jpg,png,gif,jpeg'])->move($path)))
+        {
+            $data = [];
+            $data['url']    = domain().'/uploads/'.$info->getSaveName();
+            die(json_encode(['code'=>200, 'message'=>'上传成功', 'data'=>$data]));
+        }
+        die(json_encode(['code'=>201, 'message'=>$file->getError()]));
+    }
+
     // 获取英雄资料
     public function heroes_info()
     {
