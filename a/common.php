@@ -18,7 +18,7 @@ function encrypt_pass($password = '')
 if (!function_exists('page')) {
     function page()
     {
-        return intval(input('page', 1)) . ',' . config('default_page_size');
+        return intval(input('page', 1)) . ',' . config('message_page_size');
     }
 }
 

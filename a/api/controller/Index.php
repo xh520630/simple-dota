@@ -25,8 +25,8 @@ class Index extends Controller
     {
         if (request()->isPost())
         {
-            $cont = trim(input('content', ''));
-            $user = trim(input('user', ''));
+            $cont = trim(input('cont', ''));
+            $user = trim(input('name', ''));
             if (!$cont || !$user) finish(201, '请求有误');
             $data = [];
             $data['content'] = $cont;
@@ -36,9 +36,10 @@ class Index extends Controller
                 finish(201, '添加失败') : finish(200, '添加成功');
         }
         $condition = [];
+        $condition['is_audit'] = 1;
         $message_list = \think\Db::name('message')->where($condition)->page(page())->order('id desc')->select();
         $message_count = \think\Db::name('message')->where($condition)->count();
-        finish(200, '获取成功', ['total' => $message_count, 'list' => $message_list]);
+        finish(200, '获取成功', ['total' => $message_count, 'data' => $message_list]);
     }
 
     // 上传文件

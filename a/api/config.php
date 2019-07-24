@@ -27,5 +27,6 @@ return [
     ],
     'page_size' => 15,
     'default_page_size' => 10,
+    'message_page_size' => 4,
 
 ];
