@@ -61,7 +61,8 @@ export default {
       this.$axios.post(this.GLOBAL.api_url + '/message', this.newMessage).then((res)=>{
         if (res.data.code !== 200)
           return this.$message.error('出错了噢,' + res.data.message);
-        this.$message.success('留言成功,审核后会发出~');
+        this.$message.success('留言成功,审核后会发出~(其实没审核)');
+        this.resetForm('ruleForm');
         this.getMessage();
       });
     },

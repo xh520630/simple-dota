@@ -10,6 +10,7 @@
                 <span style="color: black">{{ item.name }}</span>
                 <div class="bottom clearfix" style='height: 30px; line-height: 30px'>
                   <el-button type="text" class="button">稀有度</el-button>
+                  <el-tooltip class="item" effect="dark" :content="tips[index]" placement="bottom">
                   <el-rate
                     style='display: inline-block;line-height:10px'
                     v-model="item.value"
@@ -18,16 +19,36 @@
                     text-color="#ff9900"
                     score-template="">
                   </el-rate>
+                  </el-tooltip>
                 </div>
               </div>
             </router-link>
           </el-card>
         </el-col>
       </el-row>
+      <div style="margin-top:40px;text-align: center;" v-if='!ornament.length'>
+        <el-alert
+          style='margin-bottom: 40px;'
+          title="这个小可怜还莫得不朽"
+          type="warning"
+          description="或者是我忘记录了"
+          center
+          show-icon>
+        </el-alert>
+        <template>
+          <div>
+            <span>那棵树看起来生气了</span>
+            <el-divider></el-divider>
+            <span>与其感慨路难行，不如马上出发</span>
+          </div>
+        </template>
+      </div>
+      <error/>
     </div>
 </template>
 
 <script>
+import errorSubmit from './errorSubmit';
 import { mapState, mapGetters, mapActions } from 'vuex';
 export default {
   data () {
@@ -35,10 +56,11 @@ export default {
       msg: 'Welcome to the DOTA WORLD'
       ,ornament:[]
       ,hero_id: this.$route.query.hero_id ? this.$route.query.hero_id : this.$route.params.hero_id
-      ,
+      ,tips:[
+        '很便宜', '一顿饭钱', '一个至宝的价格', '反正我买不起', '正常人都买不起'
+      ]
     }
-  }
-  ,methods:{
+  }, methods: {
     getInfo(){
       this.$axios.get(this.GLOBAL.api_url + '/hero_detail?hero_id=' 
         + this.hero_id).then((res)=>{
@@ -46,16 +68,18 @@ export default {
           this.ornament = res.data.data;  
         })
     }
-  },created(){
+  }, created() {
     this.getInfo();
     if(this.$route.query) 
       this.hero_id = this.$route.query.id;
     console.log(this.$router.currentRoute.path);
-  },watch: {
+  }, watch: {
     $route(to,from){
       this.hero_id = to.query.hero_id;
       return this.getInfo();
     }
+  }, components:{
+    'error' : errorSubmit
   }
 }
 </script>
@@ -84,5 +108,8 @@ export default {
   }
   .image:hover{
     transform: scale(1.2)
+  }
+  .el-tooltip__popper,.is-dark{
+    font-size: 14px;
   }
 </style>

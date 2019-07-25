@@ -17,9 +17,9 @@ return [
     // 数据库名
     'database'        => 'dota2',
     // 用户名
-    'username'        => 'root',
+    'username'        => 'username',
     // 密码
-    'password'        => '520630',
+    'password'        => 'pwd',
     // 端口
     'hostport'        => '',
     // 连接dsn

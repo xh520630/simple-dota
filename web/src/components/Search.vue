@@ -5,11 +5,11 @@
         <el-button plain  @click="$router.back(-1)" v-if="!isMain">
           <i class="el-icon-arrow-left"></i>
         </el-button>
-        <el-button plain  @click="$router.replace()" v-if="isMain">
+        <el-button plain  v-if="isMain">
           <i class="el-icon-s-home"></i>
         </el-button>
         <router-link :to="{ path: 'message_board'}" v-if='showMessageBoard'>
-          <el-button plain>
+          <el-button plain style="margin-left: 15px;">
           留言板
           </el-button>
         </router-link>
@@ -18,7 +18,7 @@
       <el-col :span="6">
         <el-autocomplete
           style='max-width:250px; float:right'
-          placeholder='试着输入"JB"'
+          placeholder='试着输入"JB"什么的'
           :fetch-suggestions="querySearch"
           :trigger-on-focus="false"
           suffix-icon="el-icon-search"
@@ -88,6 +88,7 @@ export default {
       if (this.$route.path == '/message_board')
         this.showMessageBoard = false;
         else this.showMessageBoard = true;
+      this.heroName = '';
     },
   }
   ,computed:{
@@ -98,7 +99,7 @@ export default {
     }),
   }
   ,created(){
-
+    this.changeIcon();
   }
   ,watch:{
     heroName(curVal,oldVal){

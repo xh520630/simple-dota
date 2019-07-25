@@ -9,7 +9,7 @@ return [
     'template' => [
         'view_depr'     => '_',
         'default_theme' => 'new',      // 模板文件名
-        'view_path'     => PROJECT_PATH . '/web/diancan/dist/',
+//        'view_path'     => PROJECT_PATH . '/web/diancan/dist/', // ~控制模板位置
     ],
 
     'view_replace_str' => [

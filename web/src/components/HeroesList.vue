@@ -15,7 +15,7 @@
         </router-link>
       </el-col>
     </el-row>
-    <el-row :gutter="5" type="flex" justify='left' style="flex-wrap: wrap; padding: 0 5px; margin: 0 auto;">
+    <el-row :gutter="5" type="flex" justify='left' style="flex-wrap: wrap; padding: 0 5px; margin: 2% auto;">
       <el-col v-for="(index, key) in agile" :key=key :span="1" style='padding-top:10px'>
         <router-link :to="{ path : '/hero', query : { hero_id : index.id }}">        
           <div class="grid-content bg-purple" :class="{ unselected: index.unselected }">

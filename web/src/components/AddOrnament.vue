@@ -30,7 +30,8 @@
           </div>
           <div class='ornamentInfo' v-show='hero_id'>
             <el-form label-position="right" ref="ornamentForm" label-width="20%" :model="ornamentData">
-              <el-form-item label="饰品名称" prop="name">
+              <el-form-item label="饰品名称" prop="name"
+              :rules="[{ required: true, message: '请输入饰品名称', trigger: 'blur' }]">
                 <el-input v-model="ornamentData.name"></el-input>
               </el-form-item>
               <el-form-item label="出处简介" prop="desc">
@@ -39,25 +40,29 @@
               <el-form-item label="饰品价值" prop="rate">
                   <el-rate v-model="ornamentData.rate" style="margin-top: 10px"></el-rate>
               </el-form-item>
-              <el-form-item label="饰品封面" prop="avatar">
+              <el-form-item label="饰品封面" prop="avatar"
+              :rules="[{ required: true, message: '请上传封面图片', trigger: 'change' }]">
                 <el-upload
                   class="avatar-uploader"
-                  :action="upload_url + '?token=ritian'"
+                  action="http://up.qiniup.com"
+                  :data="this.upload_token"
                   :show-file-list="false"
-                  :on-success="handleAvatarSuccess"
-                  :before-upload="beforeAvatarUpload">
+                  :on-success="handleAvatarSuccess">
                   <!-- <img v-if="imgUrl" :src="imgUrl" class="avatar"> -->
                   <img v-if="ornamentData.avatar" :src="ornamentData.avatar" class="avatar">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
               </el-form-item>
-              <el-form-item label="效果图" prop="gifArr">
+              <el-form-item label="效果图" prop="gifArr"
+              :rules="[{ type: 'array', required: true, message: '请上传封面图片', trigger: 'change' }]">
                 <el-upload
                   class="upload-demo"
-                  :action="upload_url + '?token=ritian'"
+                  action="http://up.qiniup.com"
+                  :data="this.upload_token"
                   :on-preview="handlePreview"
                   :on-remove="handleRemove"
-                  :file-list="ornamentData.gifArr"
+                  :file-list="fileList"
+                  :on-success="uploadSuccess"
                   list-type="picture">
                   <el-button size="small" type="primary">点击上传</el-button>
                 </el-upload>
@@ -94,34 +99,60 @@ export default {
         },], 
       hero_attr: '',
       hero_list: [],
-      hero_id: '1',
+      hero_id: '',
       ornamentData: {
-        // 'name': '',
-        // 'desc': '',
-        'avatar': '', // 这个必须设置不然图出不来
+        avatar: '', // 这个必须设置不然图出不来
+        gifArr: [],
+        rate: 0,
+        name: '',
+        desc: '',
+        hero_id: 0,
       },
       imgUrl: '',
       fileList: [],
-
+      upload_token: {},// 七牛云上传token
     }
   }
   ,methods:{
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!');
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
+        if (!valid) return false;
+        this.ornamentData.hero_id = this.hero_id;
+        this.$axios.post(this.GLOBAL.api_url + '/addOrnament', this.ornamentData).then((res)=>{
+          console.log(res.data);
+          if (res.data.code !== 200)
+            return this.$message.error('出错啦,' + res.data.message);
+          this.$notify({
+            title: '成功提示!',
+            message: '成功啦,主人辛苦了,剩余任务 -1!',
+            type: 'success'
+          })
+          this.resetForm('ornamentForm');
+        });
       });
+    },
+    // element的upload怪怪的.
+    uploadSuccess(res, file, fileList) {
+      var newImg = {'url' : res.key, 'name' : file.name};
+      if (this.ornamentData.gifArr instanceof Array == false)
+          this.ornamentData.gifArr = Array();
+      this.ornamentData.gifArr.push(newImg);
+      console.log(this.ornamentData);
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+      this.ornamentData.gifArr.forEach((event, index)=>{
+          if (event.url == file.response.key)
+              this.$delete(this.ornamentData.gifArr, index);
+      })
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      this.fileList = [];
     },
     handleAvatarSuccess(res, file) {
-      this.ornamentData.avatar = URL.createObjectURL(file.raw);;
-      // this.imgUrl = URL.createObjectURL(file.raw);;
+      this.ornamentData.avatar = res.key;
+      // this.ornamentData.avatar = URL.createObjectURL(file.raw);;
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg';
@@ -135,15 +166,17 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
     handlePreview(file) {
       console.log(file);
     },
+    getToken() {
+      this.$axios.get(this.GLOBAL.api_url + '/uploadImg').then((res)=>{
+        this.upload_token = {'token' : res.data.data.token};
+      })
+    }
   }
   ,created(){
-
+    this.getToken();
   }
   ,computed: {
     ...mapGetters('heroStatus',{
