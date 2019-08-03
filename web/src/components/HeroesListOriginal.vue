@@ -9,11 +9,11 @@
               <el-image
               :title="index.cname"
               style="width: 100%; height: 100%"
-              :src="index.avatar"
+              src="../../static/images/DOTA2-logo.png"
               fit="fit">
-                <!-- <div slot="placeholder">
+                <div slot="placeholder">
                   <img class="el-image" src="../../static/images/DOTA2-logo3.png" style="width:100%; height:100%" alt="#">
-                </div> -->
+                </div>
               </el-image>
           </div>
         </router-link>
@@ -24,14 +24,13 @@
         <router-link :to="{ path : '/hero', query : { hero_id : index.id }}">        
           <div class="grid-content bg-purple" :class="{ unselected: index.unselected }">
             <el-image
-            :class="{ default_img : index.avatar == 'https://cs704.cn/wp-content/uploads/2019/07/2333.gif' ? true : false}"
             :title="index.cname"
             style="width: 100%; height: 100%"
-            :src="index.avatar"
+            src="../../static/images/DOTA2-logo2.png"
             fit="fit">
-              <!-- <div slot="placeholder">
+              <div slot="placeholder">
                 <img class="el-image" src="../../static/images/DOTA2-logo2.png" style="width:100%; height:100%" alt="#">
-              </div> -->
+              </div>
             </el-image>
           </div>
         </router-link>
@@ -44,22 +43,23 @@
             <el-image
             :title="index.cname"
             style="width: 100%; height: 100%"
-            :src="index.avatar"
+            src="../../static/images/DOTA2-logo3.png"
             fit="fit">
-              <!-- <div slot="placeholder">
+              <div slot="placeholder">
                 <img class="el-image" src="../../static/images/DOTA2-logo.png" style="width:100%; height:100%" alt="#">
-              </div> -->
+              </div>
             </el-image>
+            <!--:src="index.avatar"-->
           </div>
         </router-link>
       </el-col>
     </el-row>
     <br>
-    <el-button-group>
-      <el-button type="primary" plain>Q版头像</el-button>
-      <router-link :to="{ path : '/HeroesListOriginal'}">
-        <el-button plain>原版头像(施工中)</el-button>
+    <el-button-group style="width:100%; text-align: center;">
+      <router-link :to="{ path : '/Main'}">
+        <el-button plain>Q版头像</el-button>
       </router-link>
+      <el-button type="primary" plain style="float:none; margin-left: -8px">原版头像(施工中)</el-button>
     </el-button-group>
   </div>
 </template>
@@ -76,6 +76,7 @@ export default {
       ,bollen:true
       ,selectedClass:'selected'
       ,unselectedClass:'unselected'
+      ,confirmText: ['目前手机端适配较差，小程序正在开发中。', '是否继续浏览？']
       ,
     }
   }, methods: {
@@ -144,7 +145,8 @@ export default {
   .unselected{
     opacity: 0.3;
   }
-  .default_img{
-    margin-top:25%;
+ 
+  .el-message-box{
+    width: auto;
   }
 </style>

@@ -1,8 +1,10 @@
 import Main from '@/components/Main'
+import HeroesListOriginal from '@/components/HeroesListOriginal'
 import HeroInfo from '@/components/HeroInfo'
 import Ornament from '@/components/Ornament'
 import AddOrnament from '@/components/AddOrnament'
 import MessageBoard from '@/components/MessageBoard'
+import UpdateLog from '@/components/UpdateLog'
 
 
 export default [
@@ -13,6 +15,11 @@ export default [
         path: '/',
         name: 'Main',
         component: Main,
+        meta: { title : '你终于来啦(๑•́ ₃ •̀๑)' }
+    }, {
+        path: '/HeroesListOriginal',
+        name: 'HeroesListOriginal',
+        component: HeroesListOriginal,
         meta: { title : '你终于来啦(๑•́ ₃ •̀๑)' }
     }, {
         path: '/hero',
@@ -34,5 +41,10 @@ export default [
         name: 'MessageBoard',
         component: MessageBoard,
         meta: { title : '留言板' }
+    }, {
+        path: '/update_log',
+        name: 'UpdateLog',
+        component: UpdateLog,
+        meta: { title : '更新日志' }
     },
 ]

@@ -13,6 +13,7 @@ class Index extends Base
     public function index()
     {
         echo 'test_ok';
+        echo $_SERVER["HTTP_USER_AGENT"];
     }
 
     public function test()
@@ -25,7 +26,6 @@ class Index extends Base
     {
         if (request()->isPost())
         {
-
             $cont = trim(input('cont', ''));
             $user = trim(input('name', ''));
             if (!$cont || !$user) finish(201, '请填写完整内容');
@@ -190,5 +190,16 @@ class Index extends Base
         $data['error_type'] = $error_type;
         $data['create_time'] = date('Y-m-d H:i:s');
         \think\Db::name('error_log')->insert($data) ? finish(200, '提交成功~') : finish (201, '提交失败');
+    }
+
+    // 更新日志
+    public function update_log()
+    {
+        $data = \think\Db::name('update_log ul')->order('ul.is_important DESC, ul.id DESC')->limit(5)->select();
+        foreach ($data as &$item)
+            $item['detail'] = \think\Db::name('update_detail_log')
+                ->where('update_id', $item['id'])
+                ->order('type ASC')->select();
+        finish(200, '获取成功', $data);
     }
 }

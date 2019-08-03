@@ -87,14 +87,14 @@ export default {
 
   },
   filters: {
-  stringLength: function (value) {
-    if (value.length > 60);
-      return value.substr(0, 120) + '...';
-  },
-  createTime: function (value) {
-      return value.substr(6, 10);
+    stringLength: function (value) {
+      if (value.length > 60);
+        return value.substr(0, 120) + '...';
+    },
+    createTime: function (value) {
+        return value.substr(6, 10);
+    }
   }
-}
 }
 </script>
 <style scoped>

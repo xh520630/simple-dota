@@ -103,7 +103,7 @@ export default {
       ornamentData: {
         avatar: '', // 这个必须设置不然图出不来
         gifArr: [],
-        rate: 0,
+        rate: 1,
         name: '',
         desc: '',
         hero_id: 0,

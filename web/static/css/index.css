@@ -39,3 +39,6 @@
   font-size: 12px;
   color:#333;
 }
+.el-message-box{
+  width: auto;
+}

@@ -8,13 +8,20 @@
         <el-button plain  v-if="isMain">
           <i class="el-icon-s-home"></i>
         </el-button>
-        <router-link :to="{ path: 'message_board'}" v-if='showMessageBoard'>
+        <router-link  class="hidden-xs-only" :to="{ path: 'message_board'}" v-if='showMessageBoard'>
           <el-button plain style="margin-left: 15px;">
           留言板
           </el-button>
         </router-link>
+        <router-link  class="hidden-md-and-down" :to="{ path: 'update_log'}" v-if='showMessageBoard'>
+          <el-button plain style="margin-left: 15px;">
+          更新日志
+          </el-button>
+        </router-link>
       </el-col>      
-      <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
+      <el-col :span="6" style="text-align:center;">
+        
+      </el-col>
       <el-col :span="6">
         <el-autocomplete
           style='max-width:250px; float:right'
@@ -31,6 +38,7 @@
 </template>
 
 <script>
+import 'element-ui/lib/theme-chalk/display.css';
 import { mapState, mapGetters, mapActions } from 'vuex';
 export default {
   data () {
