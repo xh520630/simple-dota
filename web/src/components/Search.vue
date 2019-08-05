@@ -5,15 +5,20 @@
         <el-button plain  @click="$router.back(-1)" v-if="!isMain">
           <i class="el-icon-arrow-left"></i>
         </el-button>
+        <!-- <router-link :to="{ path: 'main'}" v-if='showMessageBoard'>
+          <el-button plain v-if="!isMain">
+            <i class="el-icon-arrow-left"></i>
+          </el-button>
+        </router-link> -->
         <el-button plain  v-if="isMain">
           <i class="el-icon-s-home"></i>
         </el-button>
-        <router-link  class="hidden-xs-only" :to="{ path: 'message_board'}" v-if='showMessageBoard'>
+        <router-link  class="hidden-xs-only" :to="{ path: '/message_board'}" v-if='showMessageBoard'>
           <el-button plain style="margin-left: 15px;">
           留言板
           </el-button>
         </router-link>
-        <router-link  class="hidden-md-and-down" :to="{ path: 'update_log'}" v-if='showMessageBoard'>
+        <router-link  class="hidden-md-and-down" :to="{ path: '/update_log'}" v-if='showMessageBoard'>
           <el-button plain style="margin-left: 15px;">
           更新日志
           </el-button>

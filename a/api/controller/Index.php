@@ -46,7 +46,10 @@ class Index extends Base
         }
         $condition = [];
         $condition['is_audit'] = 1;
-        $message_list = \think\Db::name('message')->where($condition)->page(page())->order('id desc')->select();
+        $message_list = \think\Db::name('message')->where($condition)
+            ->order('sort desc, id desc')
+            ->page(page())
+            ->select();
         $message_count = \think\Db::name('message')->where($condition)->count();
         finish(200, '获取成功', ['total' => $message_count, 'data' => $message_list]);
     }
@@ -54,8 +57,6 @@ class Index extends Base
     // 上传文件至七牛云
     public function uploadImg()
     {
-//        if (!$hero_id = intval(input('hero_id', 0)))
-//            finish(201, '操作有误');
         include VENDOR_PATH . 'php-sdk-master/autoload.php';
 
         $accessKey = config('qiniuKey')['aKey'];
@@ -128,7 +129,6 @@ class Index extends Base
         if (!$id = intval(input('hero_id', 0))) finish(201, '操作有误');
         $condition = [];
         $condition['hero_id'] = $id;
-//        $condition['hero_id'] = 2;
         $data = \think\Db::name('hero_ornament')->where($condition)->select();
         finish(200, '获取成功', $data);
     }
@@ -138,7 +138,6 @@ class Index extends Base
     {
         if (!$o_id = intval(input('ornament_id', 0))) finish(201, '操作有误');
         $condition = [];
-//        $condition['o_id'] = 2;
         $condition['o_id'] = $o_id;
         $data = \think\Db::name('ornament_images')->where($condition)->select();
         finish(200, '获取成功', $data);
@@ -195,11 +194,14 @@ class Index extends Base
     // 更新日志
     public function update_log()
     {
-        $data = \think\Db::name('update_log ul')->order('ul.is_important DESC, ul.id DESC')->limit(5)->select();
+        $data = \think\Db::name('update_log ul')
+            ->order('ul.is_important DESC, ul.id DESC')
+            ->limit(5)->select();
         foreach ($data as &$item)
             $item['detail'] = \think\Db::name('update_detail_log')
                 ->where('update_id', $item['id'])
                 ->order('type ASC')->select();
+
         finish(200, '获取成功', $data);
     }
 }

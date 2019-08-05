@@ -46,6 +46,7 @@ export default {
   created(){
     if (this._isMobile()) 
       this.checkBrowse();
+    this.common.getHeroList();
   }
 }
 </script>

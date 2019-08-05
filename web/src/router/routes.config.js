@@ -1,5 +1,4 @@
 import Main from '@/components/Main'
-import HeroesListOriginal from '@/components/HeroesListOriginal'
 import HeroInfo from '@/components/HeroInfo'
 import Ornament from '@/components/Ornament'
 import AddOrnament from '@/components/AddOrnament'
@@ -15,11 +14,6 @@ export default [
         path: '/',
         name: 'Main',
         component: Main,
-        meta: { title : '你终于来啦(๑•́ ₃ •̀๑)' }
-    }, {
-        path: '/HeroesListOriginal',
-        name: 'HeroesListOriginal',
-        component: HeroesListOriginal,
         meta: { title : '你终于来啦(๑•́ ₃ •̀๑)' }
     }, {
         path: '/hero',

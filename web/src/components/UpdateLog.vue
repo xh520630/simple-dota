@@ -26,6 +26,9 @@
         </div>
       </el-collapse-item>
     </el-collapse>
+    <div style="text-align: center;margin-top:20px;">
+        <el-link href="https://weibo.com/u/2386733455" target="_blank">联系作者，有啥意见建议(不满)都可以提。</el-link>
+    </div>
   </div>
 </template>
 

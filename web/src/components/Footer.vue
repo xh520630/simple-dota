@@ -18,8 +18,9 @@
     </div>
     <span class='img_from' v-if='showDesc'>
       头像均来自小姐姐<a href="https://weibo.com/u/7033785014" target="_blank" style="color:#333;border-bottom:1px solid #999">@tidy和两只猫</a><br>
-      <span style='color:#777'>至于为什么没有TA的头像....<br></span>
-      <span style='color:#999'>大概是发漏了吧,咱也不知道咱也不敢问~<br></span>
+      有意见建议可以<a href="https://weibo.com/u/2386733455" target="_blank" style="color:#333;border-bottom:1px solid #999">联系作者</a><br>
+      <!-- <span style='color:#777'>至于为什么没有TA的头像....<br></span> -->
+      <!-- <span style='color:#999'>大概是发漏了吧,咱也不知道咱也不敢问~<br></span> -->
     </span>
   </el-footer>
 </template>

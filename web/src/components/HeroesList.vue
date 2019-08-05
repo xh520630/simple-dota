@@ -7,12 +7,11 @@
           <div class="grid-content bg-purple" :class="{ unselected: index.unselected }">
           <!-- <div class="grid-content bg-purple" :class='index.selected'> -->
               <el-image
-              :title="index.cname"
-              style="width: 100%; height: 100%"
-              :src="index.avatar"
+              :class="{ original_img : avatar_type == 1 }"
+              :src="avatar_type == 0 ? index.avatar : index.avatar_sm"
               fit="fit">
                 <!-- <div slot="placeholder">
-                  <img class="el-image" src="../../static/images/DOTA2-logo3.png" style="width:100%; height:100%" alt="#">
+                  <img class="el-image" src="http://qiniu.cs704.cn/DOTA2-logo.png" style="width:100%; height:100%" alt="#">
                 </div> -->
               </el-image>
           </div>
@@ -22,15 +21,14 @@
     <el-row :gutter="5" type="flex" justify='left' style="flex-wrap: wrap; padding: 0 5px; margin: 2% auto;">
       <el-col v-for="(index, key) in agile" :key=key :span="1" style='padding-top:10px'>
         <router-link :to="{ path : '/hero', query : { hero_id : index.id }}">        
-          <div class="grid-content bg-purple" :class="{ unselected: index.unselected }">
+          <div class="grid-content bg-purple" 
+          :class="{ unselected: index.unselected }">
             <el-image
-            :class="{ default_img : index.avatar == 'https://cs704.cn/wp-content/uploads/2019/07/2333.gif' ? true : false}"
-            :title="index.cname"
-            style="width: 100%; height: 100%"
-            :src="index.avatar"
+            :class="{ original_img : avatar_type == 1 }"
+            :src="avatar_type == 0 ? index.avatar : index.avatar_sm"
             fit="fit">
               <!-- <div slot="placeholder">
-                <img class="el-image" src="../../static/images/DOTA2-logo2.png" style="width:100%; height:100%" alt="#">
+                <img class="el-image" src="http://qiniu.cs704.cn/DOTA2-logo.png" style="width:100%; height:100%" alt="#">
               </div> -->
             </el-image>
           </div>
@@ -42,12 +40,11 @@
         <router-link :to="{ path : '/hero', query : { hero_id : index.id }}">
           <div class="grid-content bg-purple" :class="{ unselected: index.unselected }">
             <el-image
-            :title="index.cname"
-            style="width: 100%; height: 100%"
-            :src="index.avatar"
+            :class="{ original_img : avatar_type == 1 }"
+            :src="avatar_type == 0 ? index.avatar : index.avatar_sm"
             fit="fit">
               <!-- <div slot="placeholder">
-                <img class="el-image" src="../../static/images/DOTA2-logo.png" style="width:100%; height:100%" alt="#">
+                <img class="el-image" src="http://qiniu.cs704.cn/DOTA2-logo.png" style="width:100%; height:100%" alt="#">
               </div> -->
             </el-image>
           </div>
@@ -56,10 +53,8 @@
     </el-row>
     <br>
     <el-button-group>
-      <el-button type="primary" plain>Q版头像</el-button>
-      <router-link :to="{ path : '/HeroesListOriginal'}">
-        <el-button plain>原版头像(施工中)</el-button>
-      </router-link>
+      <el-button plain :class="{ 'el-button--primary' : avatar_type == 0 }" @click='avatar_type = 0'>Q版头像</el-button>
+      <el-button plain :class="{ 'el-button--primary' : avatar_type == 1 }" @click='avatar_type = 1'>原版头像</el-button>
     </el-button-group>
   </div>
 </template>
@@ -70,34 +65,36 @@ export default {
   name: 'HeroesList',
   data () {
     return {
-      strength:[]
-      ,intelligent:[]
-      ,agile:[]
-      ,bollen:true
-      ,selectedClass:'selected'
-      ,unselectedClass:'unselected'
-      ,
+      // strength:[]
+      // intelligent:[],
+      // agile:[],
+      bollen:true,
+      selectedClass:'selected',
+      unselectedClass:'unselected',
+      avatar_type: 0, // 头像类型 0 Q版 1原版
+      
     }
   }, methods: {
-    heroes_info(){
-      this.$axios.get(this.GLOBAL.api_url + '/heroes_info').then((res)=>{
-        // console.log(res.data.data);
-        this.agile       = res.data.data.data[1];
-        this.strength    = res.data.data.data[0];
-        this.intelligent = res.data.data.data[2];
-        this.$store.dispatch('heroStatus/updateAgile',       this.agile);
-        this.$store.dispatch('heroStatus/updateStrength',    this.strength);
-        this.$store.dispatch('heroStatus/updateIntelligent', this.intelligent);
-      })
-    }
+    // heroes_info(){
+    //   this.$axios.get(this.GLOBAL.api_url + '/heroes_info').then((res)=>{
+    //     // console.log(res.data.data);
+    //     this.agile       = res.data.data.data[1];
+    //     this.strength    = res.data.data.data[0];
+    //     this.intelligent = res.data.data.data[2];
+    //     this.$store.dispatch('heroStatus/updateAgile',       this.agile);
+    //     this.$store.dispatch('heroStatus/updateStrength',    this.strength);
+    //     this.$store.dispatch('heroStatus/updateIntelligent', this.intelligent);
+    //   })
+    // }
   }, created: function() {
-    this.heroes_info();
   },
   computed:{
     // 两种获取方式,一更友善点
-    // ...mapGetters('ornamentStatus',{ //footerStatus指的是modules文件夹下的footerStatus.js模块
-    //   test:'getNum'
-    // }),
+    ...mapGetters('heroStatus',{ //footerStatus指的是modules文件夹下的footerStatus.js模块
+      agile: 'getAgile',
+      strength: 'getStrength',
+      intelligent: 'getIntelligent'
+    }),
     // ...mapState({  //这里的...是超引用，ES6的语法，意思是state里有多少属性值我可以在这里放多少属性值
     //   isShow:state=>state.ornamentStatus.testNum //注意这些与上面的区别就是state.footerStatus,
     // }),
@@ -105,6 +102,10 @@ export default {
 }
 </script>
 <style>
+  .grid-content.bg-purple{
+    width: 4vw;
+    height: 4vw;
+  }
   .el-row {
     margin-bottom: 20px;
     &:last-child {
@@ -147,4 +148,8 @@ export default {
   .default_img{
     margin-top:25%;
   }
+  .original_img{
+    padding-top: 1vw;
+  }
+
 </style>
