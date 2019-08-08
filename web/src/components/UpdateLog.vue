@@ -14,7 +14,13 @@
     <el-collapse accordion>
       <el-collapse-item v-for="(item, index) in updateArr" :key='index'>
         <template slot="title" style='position:relative'>
-          <span style='margin-left:20px;font-size:14px'>{{ item.title }}</span>
+          <el-tag 
+          v-if="item.is_important > 0"
+          effect="plain" 
+          size="mini" 
+          style='margin-left:20px;'>置顶</el-tag>
+          <span style='font-size:14px'
+          :style="item.is_important > 0 ? 'margin-left:5px;' : 'margin-left:20px;'">{{ item.title }}</span>
           <p style="font-size:12px; color:#999;position:absolute;right: 40px">{{ item.create_time | timeFilter }}</p>
         </template>
         <div v-for="(detail, id) in item.detail" :key='id'>
@@ -27,7 +33,7 @@
       </el-collapse-item>
     </el-collapse>
     <div style="text-align: center;margin-top:20px;">
-        <el-link href="https://weibo.com/u/2386733455" target="_blank">联系作者，有啥意见建议(不满)都可以提。</el-link>
+        <el-link type="primary" href="https://weibo.com/u/2386733455" target="_blank">联系作者</el-link>
     </div>
   </div>
 </template>

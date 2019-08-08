@@ -14,7 +14,7 @@ export default [
         path: '/',
         name: 'Main',
         component: Main,
-        meta: { title : '你终于来啦(๑•́ ₃ •̀๑)' }
+        meta: { title : 'DOTA2饰品展示厅(๑•́ ₃ •̀๑)' }
     }, {
         path: '/hero',
         name: 'Hero',
@@ -24,7 +24,7 @@ export default [
         path: '/ornament',
         name: 'Ornament',
         component: Ornament,
-        meta: { title : 'do.cs704.cn' }
+        meta: { title : 'DOTA2饰品展示厅(๑•́ ₃ •̀๑)' }
     }, {
         path: '/ornament/addOrnament',
         name: 'AaddOrnament',

@@ -53,8 +53,8 @@
     </el-row>
     <br>
     <el-button-group>
-      <el-button plain :class="{ 'el-button--primary' : avatar_type == 0 }" @click='avatar_type = 0'>Q版头像</el-button>
-      <el-button plain :class="{ 'el-button--primary' : avatar_type == 1 }" @click='avatar_type = 1'>原版头像</el-button>
+      <el-button plain :class="{ 'el-button--primary' : avatar_type == 0 }" @click="changeAvatarType(0)">Q版头像</el-button>
+      <el-button plain :class="{ 'el-button--primary' : avatar_type == 1 }" @click="changeAvatarType(1)">原版头像</el-button>
     </el-button-group>
   </div>
 </template>
@@ -71,21 +71,14 @@ export default {
       bollen:true,
       selectedClass:'selected',
       unselectedClass:'unselected',
-      avatar_type: 0, // 头像类型 0 Q版 1原版
+      // avatar_type: 0, // 头像类型 0 Q版 1原版
       
     }
   }, methods: {
-    // heroes_info(){
-    //   this.$axios.get(this.GLOBAL.api_url + '/heroes_info').then((res)=>{
-    //     // console.log(res.data.data);
-    //     this.agile       = res.data.data.data[1];
-    //     this.strength    = res.data.data.data[0];
-    //     this.intelligent = res.data.data.data[2];
-    //     this.$store.dispatch('heroStatus/updateAgile',       this.agile);
-    //     this.$store.dispatch('heroStatus/updateStrength',    this.strength);
-    //     this.$store.dispatch('heroStatus/updateIntelligent', this.intelligent);
-    //   })
-    // }
+    changeAvatarType(val){
+      // ~这段可以mark一下
+      this.$store.dispatch('userStatus/updateAvatarType', val);
+    }
   }, created: function() {
   },
   computed:{
@@ -93,8 +86,11 @@ export default {
     ...mapGetters('heroStatus',{ //footerStatus指的是modules文件夹下的footerStatus.js模块
       agile: 'getAgile',
       strength: 'getStrength',
-      intelligent: 'getIntelligent'
+      intelligent: 'getIntelligent',
     }),
+    ...mapGetters('userStatus',{ //footerStatus指的是modules文件夹下的footerStatus.js模块
+      avatar_type: 'getAvatarType'    
+    })
     // ...mapState({  //这里的...是超引用，ES6的语法，意思是state里有多少属性值我可以在这里放多少属性值
     //   isShow:state=>state.ornamentStatus.testNum //注意这些与上面的区别就是state.footerStatus,
     // }),
@@ -105,6 +101,7 @@ export default {
   .grid-content.bg-purple{
     width: 4vw;
     height: 4vw;
+    cursor: default;
   }
   .el-row {
     margin-bottom: 20px;
@@ -139,7 +136,7 @@ export default {
     transform: scale(1.4);
   }
   .heroes-list .el-image:hover{
-    overflow:visible;
+    overflow: visible;
     z-index: 233;
   }
   .unselected{

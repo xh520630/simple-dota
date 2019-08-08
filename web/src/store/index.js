@@ -1,13 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import heroStatus from './modules/heroStatus'
+import userStatus from './modules/userStatus'
 import ornamentStatus from './modules/ornamentStatus'
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules:{
         heroStatus,
-        ornamentStatus
+        ornamentStatus,
+        userStatus,
     }
 });
 

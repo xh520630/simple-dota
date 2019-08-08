@@ -26,15 +26,15 @@ const mutations={
     },
 };
 const actions={
-   updateStrength(context, arr){ //触发mutations里面的pushCollects ,传入数据形参item 对应到items
-        context.commit('updateStrength',arr);
-   },
-   updateIntelligent(context, arr){ //触发mutations里面的pushCollects ,传入数据形参item 对应到items
-        context.commit('updateIntelligent',arr);
-   },
-   updateAgile(context, arr){ //触发mutations里面的pushCollects ,传入数据形参item 对应到items
-        context.commit('updateAgile',arr);
-   },
+    updateStrength(context, arr){ //触发mutations里面的pushCollects ,传入数据形参item 对应到items
+        context.commit('updateStrength', arr);
+    },
+    updateIntelligent(context, arr){ //触发mutations里面的pushCollects ,传入数据形参item 对应到items
+        context.commit('updateIntelligent', arr);
+    },
+    updateAgile(context, arr){ //触发mutations里面的pushCollects ,传入数据形参item 对应到items
+        context.commit('updateAgile', arr);
+    },
 };
 export default {
     namespaced:true,//用于在全局引用此文件里的方法时标识这一个的文件名
